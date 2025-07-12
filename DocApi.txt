@@ -1,0 +1,37 @@
+Login - prezzi, prenotazioni, salvare itinerari
+//Chatbot - interrogazione dati
+Storico itinerari - chiamata a db, salvataggio, modifica, prenotazioni in programma, pagina recap
+Lista desideri
+Pagina proposte con pacchetti - filtri, barra ricerca (interrogazione dati)
+
+user/login
+parameters: username, password
+
+user/logout
+no parameters
+
+GET storico
+parameters: id viaggio
+POST storico
+request body: viaggio
+
+GET wishlist
+parameters: userid
+
+POST wishlist
+parameters: id viaggio
+DELETE wishlist
+
+
+GET reservation
+POST reservation
+DELETE reservation
+UPDATE reservation
+
+
+Reservation storico e wishlist da considerare se sono da togliere
+
+
+
+
+
