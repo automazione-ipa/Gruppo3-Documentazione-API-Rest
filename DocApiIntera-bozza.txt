@@ -128,10 +128,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Reservation'
+                $ref: '#/components/schemas/Rows'
             application/xml:
               schema:
-                $ref: '#/components/schemas/Reservation'
+                $ref: '#/components/schemas/Rows'
         '400':
           description: Invalid ID supplied
         '404':
@@ -662,6 +662,15 @@ components:
           example: true
       xml:
         name: reservation
+    Rows:
+      type: object
+      properties:
+        modifiedRows:
+          type: integer
+          format: int64
+          example: 1
+      xml:
+        name: rows
   
   
   
