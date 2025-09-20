@@ -144,6 +144,43 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    update:
+      tags:
+        - reservation
+      summary: Logical delete of a reservation.
+      description: Change the isActive value of a reservation from true to false.
+      operationId: deavtiveReservation
+      parameters:
+        - name: reservationId
+          in: path
+          description: Resevation Id
+          required: true
+          explode: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rows'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Rows'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Reservation not found
+        '422':
+          description: Validation exception
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /reservation/{userId}:
     get:
       tags:
