@@ -204,12 +204,36 @@ paths:
         - petstore_auth:
             - write:pets
             - read:pets
-  #/reservation/storico/{userId}:
-   # get:
-    #  tags:
-     #   - reservation
-      #summary: Finds all user storic reservations.
-      #description: Finds all user storic reservation
+  /reservation/storico/{userId}:
+    get:
+      tags:
+        - reservation
+      summary: Finds all user storic reservations.
+      description: Finds all user storic reservations.
+      operationId: findStoricReservationsByUserId
+      parameters:
+        - name: userId
+          in: path
+          description: User Id
+          required: true
+          explode: true
+          schema:
+            type: integer
+            format: int64
+        - name: minDate
+          in: query
+          description: Oldest date to search reservation
+          required: false
+          schema:
+           type: string
+           format: date
+        - name: maxDate
+          in: query
+          description: Newest date to search reservation
+          required: false
+          schema:
+           type: string
+           format: date
           
           
           
@@ -569,13 +593,17 @@ components:
     Reservation:
       type: object
       properties:
-        tripId:
+        reservationId:
           type: integer
           format: int64
           example: 163
         userId:
           type: string
           example: MarioRossi
+        isActive:
+          type: boolean
+          default: true
+          example: true
       xml:
         name: reservation
   
