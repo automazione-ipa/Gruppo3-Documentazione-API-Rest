@@ -17,18 +17,11 @@ tags:
     externalDocs:
       description: Find out more
       url: https://swagger.io
-  - name: pet
-    description: Everything about your Pets
+  - name: wishlist
+    description: Lista Desideri
     externalDocs:
       description: Find out more
       url: https://swagger.io
-  - name: store
-    description: Access to Petstore orders
-    externalDocs:
-      description: Find out more about our store
-      url: https://swagger.io
-  - name: user
-    description: Operations about user
 paths:
   /reservation:
     post:
@@ -318,6 +311,92 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+                
+                
+                
+  /wishlist/{userId}:
+    get:
+      tags:
+      - wishlist
+      summary: Ottiene la wishlist di un utente
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lista delle prenotazioni in wishlist
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    reservationId:
+                      type: string
+        "404":
+          description: Utente non trovato
+    delete:
+      tags:
+        - wishlist
+      summary: Elimina la wishlist di un utente
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Wishlist eliminata
+        "404":
+          description: Utente non trovato
+
+  /wishlist:
+    post:
+      tags:
+        - wishlist
+      summary: Aggiunge una prenotazione alla wishlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reservationId:
+                  type: string
+              required:
+                - reservationId
+      responses:
+        "201":
+          description: Prenotazione aggiunta
+    put:
+      tags:
+        - wishlist
+      summary: Aggiorna la wishlist di un utente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reservationId:
+                  type: string
+                userId:
+                  type: string
+              required:
+                - reservationId
+                - userId
+      responses:
+        "200":
+          description: Wishlist aggiornata
+        "404":
+          description: Utente o prenotazione non trovati
 
 components:
   schemas:
