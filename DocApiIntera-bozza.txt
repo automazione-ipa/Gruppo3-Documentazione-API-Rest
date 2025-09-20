@@ -144,7 +144,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-    update:
+    put:
       tags:
         - reservation
       summary: Logical delete of a reservation.
