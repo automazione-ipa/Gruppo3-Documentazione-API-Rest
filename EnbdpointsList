@@ -1,0 +1,72 @@
+Login - prezzi, prenotazioni, salvare itinerari
+
+Chatbot - interrogazione dati
+
+Storico itinerari - chiamata a db, salvataggio, modifica, prenotazioni in programma, pagina recap
+
+Lista desideri
+
+Pagina proposte con pacchetti - filtri, barra ricerca (interrogazione dati)
+
+GET user/login
+request body:
+username, password
+
+GET user/logout
+no parameters
+
+POST user 
+request body: Dati utente da decidere
+
+DELETE user/{userId}
+
+
+PUT user/{userId}
+request body: Dati utente da decidere
+
+ 
+
+
+
+GET wishlist/{userId}
+
+POST wishlist
+request body reservationid
+
+PUT wishlist/{userId}
+request body:
+reservationid
+
+
+
+
+DELETE wishlist/{userId}
+
+
+GET reservation/{reservationId}
+parameters: reservationId
+
+GET reservation/{userId}
+
+POST reservation
+request body: da decidere
+
+DELETE reservation
+parameters: reservationid
+
+UPDATE reservation
+request body: da decidere
+
+GET reservation/storico/{reservationId}
+
+GET reservation/storico/{userId}
+params: data minima, data massima
+
+CHIAMATE CHATBOT ANCORA DA DECIDERE
+
+
+Categorie:
+user
+wishlist
+reservation
+chatbot
