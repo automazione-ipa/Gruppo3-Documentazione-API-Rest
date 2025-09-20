@@ -107,6 +107,43 @@ paths:
         - petstore_auth:
             - write:pets
             - read:pets
+    delete:
+      tags:
+       - reservation
+      summary: Definetively delete a reservation.
+      description: Delete a reservation from DB.
+      operationId: deleteReservation
+      parameters:
+        - name: reservationId
+          in: path
+          description: Resevation Id
+          required: true
+          explode: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Reservation not found
+        '422':
+          description: Validation exception
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /reservation/{userId}:
     get:
       tags:
@@ -234,9 +271,28 @@ paths:
           schema:
            type: string
            format: date
-          
-          
-          
+      responses:
+        '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Reservation'
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/Reservation'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: User not found
+        '422':
+          description: Validation exception
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
           
           
           
