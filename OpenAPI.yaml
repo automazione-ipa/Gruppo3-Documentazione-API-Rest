@@ -1,0 +1,276 @@
+openapi: 3.0.4
+info:
+  title: Reservation - OpenAPI 3.0
+  termsOfService: https://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.12
+externalDocs:
+  description: Find out more about Swagger
+  url: https://swagger.io
+tags:
+  - name: reservation
+    description: Prenotazioni
+    externalDocs:
+      description: Find out more
+      url: https://swagger.io
+  - name: wishlist
+    description: Lista Desideri
+    externalDocs:
+      description: Find out more
+      url: https://swagger.io
+paths:
+  /user/{userId}/reservations:
+    post:
+      tags:
+        - reservation
+      summary: Add a new reservation
+      operationId: postReservation
+      parameters:
+        - name: userId
+          in: path
+          description: user id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Create a reservation for a trip
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reservation'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Reservation'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Trip not found
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/{userId}/reservations/{reservationId}:
+    delete:
+      tags:
+        - reservation
+      summary: Delete a reservation
+      operationId: deleteReservation
+      parameters:
+        - name: userId
+          in: path
+          description: user id
+          required: true
+          schema:
+            type: string
+        - name: reservationId
+          in: path
+          description: reservation id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid user id or reservation id
+        '404':
+          description: User or reservation not found
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/{userId}/reservations:
+    get:
+      tags:
+        - reservation
+      summary: Get reservations
+      description: Get a reservation list
+      operationId: getReservations
+      parameters:
+        - name: userId
+          in: path
+          description: user id
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: reservation type
+          required: true
+          schema:
+            type: string
+            enum: [HISTORY, PLANNED, WISH]
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationList'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ReservationList'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Reservation not found
+        '422':
+          description: Validation exception
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /users/{userId}/wishlist:
+    get:
+      tags:
+      - wishlist
+      summary: Return user's wishlist
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Wishlist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationList'
+        "404":
+          description: User id not found
+    delete:
+      tags:
+        - wishlist
+      summary: Delete user's wishlist
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chatId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Wishlist eliminata
+        "404":
+          description: Utente non trovato
+    post:
+      tags:
+        - wishlist
+      summary: Add trip to the wishlist
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chatId:
+                  type: string
+              required:
+                - chatId
+      responses:
+        "201":
+          description: Trip successfully added to wishlist
+
+components:
+  schemas:
+    Reservation:
+      type: object
+      properties:
+        chatId:
+          type: string
+          example: abcd1234
+        origin:
+          type: string
+          example: Torino
+        destination:
+          type: string
+          example: Roma
+        departureDate:
+          type: string
+          format: date
+          example: 2025-01-10
+        returnDate:
+          type: string
+          format: date
+          example: 2025-01-17
+        price:
+          type: number
+          format: double
+          example: 100.50
+        participants:
+          type: integer
+          example: 4
+        note:
+          type: string
+          example: Note vancaza Roma
+      xml:
+        name: reservation
+    ReservationList:
+      type: array
+      items:
+          $ref: '#/components/schemas/Reservation'
+      xml:
+        name: reservation
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+  requestBodies:
+    Reservation:
+      description: Create a reservation for a trip
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Reservation'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Reservation'
+      
+      
+      
+      
+      
+      
